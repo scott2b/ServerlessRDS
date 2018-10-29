@@ -1,0 +1,26 @@
+service: slsrds
+
+frameworkVersion: ">=1.32.0 <2.0.0"
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  runtime: python3.6
+  environment:
+    STAGE: ${self:provider.stage}
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    usePipenv: true
+
+functions:
+  schema: # print the database schema
+    handler: functions.get_schema
+    timeout: ${file(./config/serverless.${self:provider.stage}.yml):SCHEMA_TIMEOUT, '5'}
+    reservedConcurrency: 1
+    vpc: ${file(./config/vpc.${self:provider.stage}.yml)}

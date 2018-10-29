@@ -1,0 +1,10 @@
+{
+  "name": "serverless-rds",
+  "version": "0.0.1",
+  "description": "Tools for managing RDS databases via AWS Lambda",
+  "author": "Scott B. Bradley",
+  "license": "MIT",
+  "dependencies": {
+    "serverless-python-requirements": "^4.2.4"
+  }
+}
