@@ -27,15 +27,15 @@ def get_schema(event, context):
     config = get_config()
     try:
         database = config[f'database.{identifier}']
-        if database['NAME'] is None or database['USER'] is None:
+        if database.get('name') is None or database.get('user') is None:
             raise Exception(f'Database not configured: {identifier}')
     except KeyError:
         raise Exception(f'Database not configured: {identifier}')
     db = psycopg2.connect(
-        dbname=database['NAME'],
-        user=database['USER'],
-        password=database['PASSWORD'],
-        host=database['HOST']
+        dbname=database['name'],
+        user=database['user'],
+        password=database.get('password'),
+        host=database.get('host')
     )
     cursor = db.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     query = "SELECT table_name FROM information_schema.tables WHERE " \

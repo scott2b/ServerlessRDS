@@ -19,6 +19,11 @@ custom:
     usePipenv: true
 
 functions:
+  create: # create a database
+    handler: functions.create_db
+    timeout: ${file(./config/serverless.${self:provider.stage}.yml):CREATE_TIMEOUT, '20'}
+    reservedConcurrency: 1
+    vpc: ${file(./config/vpc.${self:provider.stage}.yml)}
   schema: # print the database schema
     handler: functions.get_schema
     timeout: ${file(./config/serverless.${self:provider.stage}.yml):SCHEMA_TIMEOUT, '5'}
