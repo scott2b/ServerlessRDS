@@ -71,7 +71,3 @@ def get_schema(event, context):
     cursor.close()
     db.close()
     return response
-
-
-if __name__=='__main__':
-    get_schema('default')
